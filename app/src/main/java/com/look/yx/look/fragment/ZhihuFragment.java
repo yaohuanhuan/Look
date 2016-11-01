@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.look.yx.look.R;
+import com.look.yx.look.bean.zhihu.ZhihuDaily;
 import com.look.yx.look.presenter.implView.IZhihuFragment;
 
 import butterknife.BindView;
@@ -29,6 +30,43 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         view = inflater.inflate(R.layout.zhihu_fragment_layout, container, false);
         ButterKnife.bind(this, view);
         return view;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initialDate();
+        initialView();
+
+    }
+
+    @Override
+    public void updateList(ZhihuDaily zhihuDaily) {
+
+    }
+
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void hidProgressDialog() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    public void initialDate(){
+
+    }
+
+    public void initialView(){
 
     }
 }

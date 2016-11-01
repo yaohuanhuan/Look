@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         fragmentManager = getSupportFragmentManager();
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "home")).setActiveColor(R.color.colorPrimary)
@@ -64,33 +64,33 @@ public class MainActivity extends AppCompatActivity {
         showFragment(0);
     }
 
-    private void showFragment(int index){
+    private void showFragment(int index) {
         FragmentTransaction fTransaction = fragmentManager.beginTransaction();
         hideAllFragment(fTransaction);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (index){
+        switch (index) {
             case 0:
-                if (zhihuFragment == null  && fragmentManager.findFragmentByTag("zhihu") == null ) {
+                if (zhihuFragment == null && fragmentManager.findFragmentByTag("zhihu") == null) {
                     zhihuFragment = new ZhihuFragment();
-                    fTransaction.add(R.id.fragment_container, zhihuFragment,"zhihu");
+                    fTransaction.add(R.id.fragment_container, zhihuFragment, "zhihu");
                 } else {
                     zhihuFragment = (ZhihuFragment) fragmentManager.findFragmentByTag("zhihu");
                     fTransaction.show(zhihuFragment);
                 }
                 break;
             case 1:
-                if (topNewsFragment == null  && fragmentManager.findFragmentByTag("news") == null) {
+                if (topNewsFragment == null && fragmentManager.findFragmentByTag("news") == null) {
                     topNewsFragment = new TopNewsFragment();
-                    fTransaction.add(R.id.fragment_container, topNewsFragment,"news");
+                    fTransaction.add(R.id.fragment_container, topNewsFragment, "news");
                 } else {
                     topNewsFragment = (TopNewsFragment) fragmentManager.findFragmentByTag("news");
                     fTransaction.show(topNewsFragment);
                 }
                 break;
             case 2:
-                if (meiziFragment == null  && fragmentManager.findFragmentByTag("meizi") == null) {
+                if (meiziFragment == null && fragmentManager.findFragmentByTag("meizi") == null) {
                     meiziFragment = new MeiziFragment();
-                    fTransaction.add(R.id.fragment_container, meiziFragment,"meizi");
+                    fTransaction.add(R.id.fragment_container, meiziFragment, "meizi");
                 } else {
                     meiziFragment = (MeiziFragment) fragmentManager.findFragmentByTag("meizi");
                     fTransaction.show(meiziFragment);

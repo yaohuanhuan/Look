@@ -6,4 +6,5 @@ package com.look.yx.look.presenter;
 
 public interface IZhihuPresenter extends BasePresenter {
 
+
 }
