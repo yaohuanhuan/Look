@@ -7,4 +7,18 @@ import com.look.yx.look.presenter.IZhihuPresenter;
  */
 
 public class ZhihuPreseterImpl extends BasePresenterImpl implements IZhihuPresenter {
+    @Override
+    public void getLastZhihuNews() {
+
+    }
+
+    @Override
+    public void getTheDaily(String date) {
+
+    }
+
+    @Override
+    public void getLastFromCache() {
+
+    }
 }

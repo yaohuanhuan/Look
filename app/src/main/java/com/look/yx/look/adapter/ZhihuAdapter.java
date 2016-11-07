@@ -1,8 +1,24 @@
 package com.look.yx.look.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.look.yx.look.R;
+import com.look.yx.look.bean.zhihu.ZhihuDailyItem;
+import com.look.yx.look.widget.BadgedFourThreeImageView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static android.R.id.list;
 
 /**
  * Created by yx on 2016/11/2.
@@ -10,10 +26,17 @@ import android.view.ViewGroup;
 
 public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHolder> {
 
+    private Context mContext;
+    private List<ZhihuDailyItem> zhihuDailyItemList = new ArrayList<>();
+
+    public ZhihuAdapter(Context context) {
+        this.mContext = context;
+    }
 
     @Override
     public ZhihuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        ZhihuViewHolder zhihuViewHolder = new ZhihuViewHolder(LayoutInflater.from(mContext).inflate(R.layout.zhihu_layout_item, parent, false));
+        return zhihuViewHolder;
     }
 
     @Override
@@ -23,13 +46,23 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
 
     @Override
     public int getItemCount() {
-        return 0;
+        return zhihuDailyItemList.size();
     }
 
-    public static class ZhihuViewHolder extends RecyclerView.ViewHolder{
+    static class ZhihuViewHolder extends RecyclerView.ViewHolder {
 
-        public ZhihuViewHolder(View itemView) {
+        @BindView(R.id.item_image_id)
+        BadgedFourThreeImageView itemImageId;
+        @BindView(R.id.item_text_id)
+        TextView itemTextId;
+        @BindView(R.id.zhihu_item_layout)
+        LinearLayout zhihuItemLayout;
+
+        ZhihuViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
+
+
 }
