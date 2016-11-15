@@ -41,7 +41,12 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
 
     @Override
     public void onBindViewHolder(ZhihuViewHolder holder, int position) {
+        holder.itemText.setText(zhihuDailyItemList.get(position).getTitle());
+    }
 
+    public void addItems(ArrayList<ZhihuDailyItem> list) {
+        zhihuDailyItemList.addAll(list);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,7 +59,7 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
         @BindView(R.id.item_image_id)
         BadgedFourThreeImageView itemImageId;
         @BindView(R.id.item_text_id)
-        TextView itemTextId;
+        TextView itemText;
         @BindView(R.id.zhihu_item_layout)
         LinearLayout zhihuItemLayout;
 

@@ -2,6 +2,8 @@ package com.look.yx.look.bean.zhihu;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 /**
  * Created by yx on 2016/11/1.
  */
@@ -65,5 +67,17 @@ public class ZhihuDailyItem {
 
     public void setHasFadedIn(boolean hasFadedIn) {
         this.hasFadedIn = hasFadedIn;
+    }
+
+    @Override
+    public String toString() {
+        return "ZhihuDailyItem{" +
+                "images=" + Arrays.toString(images) +
+                ", type=" + type +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", hasFadedIn=" + hasFadedIn +
+                '}';
     }
 }

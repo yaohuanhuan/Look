@@ -12,8 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiManage {
 
-    //私有构造方法
-    private ApiManage(){}
+//    //私有构造方法
+//    private ApiManage(){}
     //ApiManage实例
     public static ApiManage apiManage;
     //ZhihuApi引用
@@ -31,10 +31,10 @@ public class ApiManage {
      * 拿到ApiManage实例
      * @return
      */
-    public static ApiManage getInstence(){
-        if (apiManage == null){
-            synchronized (ApiManage.class){
-                if (apiManage == null){
+    public static ApiManage getInstence() {
+        if (apiManage == null) {
+            synchronized (ApiManage.class) {
+                if (apiManage == null) {
                     apiManage = new ApiManage();
                 }
             }

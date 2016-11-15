@@ -13,6 +13,7 @@ import com.look.yx.look.R;
 import com.look.yx.look.fragment.MeiziFragment;
 import com.look.yx.look.fragment.TopNewsFragment;
 import com.look.yx.look.fragment.ZhihuFragment;
+import com.look.yx.look.presenter.implPresenter.ZhihuPreseterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

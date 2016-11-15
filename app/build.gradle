@@ -40,4 +40,6 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.google.code.gson:gson:2.8.0'
+    //图片加载相关
+    compile 'com.facebook.fresco:fresco:0.14.1'
 }

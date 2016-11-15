@@ -40,4 +40,14 @@ public class ZhihuDaily  {
     public void setStories(ArrayList<ZhihuDailyItem> stories) {
         this.stories = stories;
     }
+
+
+    @Override
+    public String toString() {
+        return "ZhihuDaily{" +
+                "date='" + date + '\'' +
+                ", mZhihuDailyItems=" + mZhihuDailyItems +
+                ", stories=" + stories +
+                '}';
+    }
 }

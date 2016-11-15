@@ -24,4 +24,19 @@ public class MeiziFragment extends BaseFragment implements IMeiziFragment {
         view = inflater.inflate(R.layout.meizi_fragment_layout,container,false);
         return view;
     }
+
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void hidProgressDialog() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }
