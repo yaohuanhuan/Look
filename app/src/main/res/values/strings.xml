@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Look</string>
+    <string name="snack_infor">请检查网络</string>
 </resources>

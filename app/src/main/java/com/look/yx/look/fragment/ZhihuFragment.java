@@ -2,6 +2,8 @@ package com.look.yx.look.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,6 +40,8 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     RecyclerView recycle;
     @BindView(R.id.prograss)
     ProgressBar prograss;
+    @BindView(R.id.mSwipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Nullable
@@ -91,18 +95,61 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
 
     @Override
     public void showError(String error) {
-        loading = false;
-        Toast.makeText(getActivity(),"showError!",Toast.LENGTH_LONG).show();
+        Log.e("test","111111111111111111");
+        if (recycle != null) {
+            Snackbar.make(recycle, getString(R.string.snack_infor), Snackbar.LENGTH_LONG).setAction("重试", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (currentLoadDate.equals("0")) {
+                        loading = false;
+                        zhihuPreseter.getLastZhihuNews();
+                    } else {
+                        loading = false;
+                        zhihuPreseter.getTheDaily(currentLoadDate);
+                    }
+                }
+            }).show();
+
+        }
     }
 
     public void initialDate() {
-        zhihuPreseter = new ZhihuPreseterImpl(ZhihuFragment.this);
+        zhihuPreseter = new ZhihuPreseterImpl(ZhihuFragment.this,getActivity(),getActivity().getApplicationContext());
         zhihuAdapter = new ZhihuAdapter(getContext());
         currentLoadDate = "0";
     }
 
     public void initialView() {
         mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mSwipeRefreshLayout.setProgressViewOffset(false, -50, 150);
+        mSwipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // 刷新动画开始后回调到此方法
+                        if (currentLoadDate.equals("0")) {
+                            loading = false;
+                            zhihuPreseter.getLastZhihuNews();
+                        } else {
+                            loading = false;
+                            zhihuPreseter.getTheDaily(currentLoadDate);
+                        }
+                        mSwipeRefreshLayout.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //让刷新飘一会，爽一爽
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            }
+                        },1000);
+
+                    }
+                }
+        );
         recycle.setLayoutManager(mLinearLayoutManager);
         recycle.setHasFixedSize(true);
         recycle.setAdapter(zhihuAdapter);
@@ -119,10 +166,8 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
                 int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
                 int childCount = mLinearLayoutManager.getChildCount();
                 int ItemCount = mLinearLayoutManager.getItemCount();
-                Log.e("test",""+loading);
 
                 if (!loading && lastVisibleItem + childCount > ItemCount){
-                    loading = true;
                     loadMoreDate();
                 }
             }
@@ -131,22 +176,12 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
     }
 
     public void loadDate() {
-        if(NetWorkUtil.isNetWorkAvailable(getActivity().getApplicationContext())){
-            zhihuPreseter.getLastZhihuNews();
-        }else{
-            Toast.makeText(getActivity(),"没有网络!",Toast.LENGTH_LONG).show();
-        }
-
+        loading = true;
+        zhihuPreseter.getLastZhihuNews();
     }
 
     public void loadMoreDate() {
-        if(NetWorkUtil.isNetWorkAvailable(getActivity().getApplicationContext())){
-            zhihuPreseter.getTheDaily(currentLoadDate);
-        }else{
-            Log.e("test","没有网络");
-            Toast.makeText(getActivity(),"没有网络!",Toast.LENGTH_LONG).show();
-            loading = false;
-        }
-
+        loading = true;
+        zhihuPreseter.getTheDaily(currentLoadDate);
     }
 }
