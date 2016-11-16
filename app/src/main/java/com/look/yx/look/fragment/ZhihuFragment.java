@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.look.yx.look.R;
 import com.look.yx.look.adapter.ZhihuAdapter;
 import com.look.yx.look.bean.zhihu.ZhihuDaily;
 import com.look.yx.look.presenter.implPresenter.ZhihuPreseterImpl;
 import com.look.yx.look.presenter.implView.IZhihuFragment;
+import com.look.yx.look.util.NetWorkUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +69,7 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         loading = false;
         currentLoadDate = zhihuDaily.getDate();
         zhihuAdapter.addItems(zhihuDaily.getStories());
-        //要是数据不够多，判断view是否能够滑动，不能的话就在加载一次数据
+        //要是数据不够多，判断view是否能够滑动，不能的话就再加载一次数据
         if (!recycle.canScrollVertically(View.SCROLL_INDICATOR_BOTTOM)) {
             loadMoreDate();
         }
@@ -89,7 +91,8 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
 
     @Override
     public void showError(String error) {
-
+        loading = false;
+        Toast.makeText(getActivity(),"showError!",Toast.LENGTH_LONG).show();
     }
 
     public void initialDate() {
@@ -112,29 +115,38 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
                 int childCount = mLinearLayoutManager.getChildCount();
                 int ItemCount = mLinearLayoutManager.getItemCount();
-                int a = lastVisibleItem + childCount;
-                Log.e("test", "" + a+"    "+ItemCount);
+                Log.e("test",""+loading);
+
                 if (!loading && lastVisibleItem + childCount > ItemCount){
                     loading = true;
-                    Log.e("test", "加载了！");
                     loadMoreDate();
                 }
-
-
             }
         });
         loadDate();
     }
 
     public void loadDate() {
-        zhihuPreseter.getLastZhihuNews();
+        if(NetWorkUtil.isNetWorkAvailable(getActivity().getApplicationContext())){
+            zhihuPreseter.getLastZhihuNews();
+        }else{
+            Toast.makeText(getActivity(),"没有网络!",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void loadMoreDate() {
+        if(NetWorkUtil.isNetWorkAvailable(getActivity().getApplicationContext())){
+            zhihuPreseter.getTheDaily(currentLoadDate);
+        }else{
+            Log.e("test","没有网络");
+            Toast.makeText(getActivity(),"没有网络!",Toast.LENGTH_LONG).show();
+            loading = false;
+        }
 
-        zhihuPreseter.getTheDaily(currentLoadDate);
     }
 }

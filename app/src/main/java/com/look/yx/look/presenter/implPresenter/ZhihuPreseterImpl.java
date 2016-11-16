@@ -71,6 +71,7 @@ public class ZhihuPreseterImpl extends BasePresenterImpl implements IZhihuPresen
                     @Override
                     public void onError(Throwable e) {
                         Log.e("test", "错误 === " + e.getMessage());
+                        mZhihuFragment.showError(e.getMessage());
                         mZhihuFragment.hidProgressDialog();
                     }
 

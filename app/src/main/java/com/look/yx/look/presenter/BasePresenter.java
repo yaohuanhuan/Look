@@ -5,5 +5,9 @@ package com.look.yx.look.presenter;
  */
 
 public interface BasePresenter {
+
+    /**
+     * 取消容器里面所有订阅事件
+     */
     void unsubcrible();
 }

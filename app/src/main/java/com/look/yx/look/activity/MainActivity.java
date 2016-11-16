@@ -13,10 +13,15 @@ import com.look.yx.look.R;
 import com.look.yx.look.fragment.MeiziFragment;
 import com.look.yx.look.fragment.TopNewsFragment;
 import com.look.yx.look.fragment.ZhihuFragment;
-import com.look.yx.look.presenter.implPresenter.ZhihuPreseterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+/**
+ * Created by yx on 2016/11/16.
+ * QQ邮箱1107129170@qq.com
+ * 微信18815289611
+ */
 
 public class MainActivity extends AppCompatActivity {
 
