@@ -9,20 +9,19 @@
     android:foreground="@drawable/mid_grey_ripple"
     android:stateListAnimator="@animator/raise">
 
-    <com.look.yx.look.widget.BadgedFourThreeImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <!--android:foreground="@drawable/mid_grey_ripple"-->
+    <!--android6.0以上的属性-->
+
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_image_id"
-        android:layout_width="@dimen/image_width"
-        android:layout_height="@dimen/image_hight"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="@dimen/image_left_margin"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
         android:layout_marginTop="5dp"
         android:elevation="@dimen/z_card"
-        android:foreground="@drawable/mid_grey_ripple"
         android:stateListAnimator="@animator/raise"
-        app:badgeGravity="end|bottom"
-        app:badgePadding="@dimen/padding_normal"/>
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="@dimen/image_left_margin"/>
+
 
     <TextView
         android:id="@+id/item_text_id"

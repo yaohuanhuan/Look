@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.look.yx.look.R;
 import com.look.yx.look.bean.zhihu.ZhihuDailyItem;
-import com.look.yx.look.widget.BadgedFourThreeImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.id.list;
-
 /**
  * Created by yx on 2016/11/2.
  */
 
 public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHolder> {
+
 
     private Context mContext;
     private List<ZhihuDailyItem> zhihuDailyItemList = new ArrayList<>();
@@ -42,6 +41,7 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
     @Override
     public void onBindViewHolder(ZhihuViewHolder holder, int position) {
         holder.itemText.setText(zhihuDailyItemList.get(position).getTitle());
+        holder.itemImageId.setImageURI(zhihuDailyItemList.get(position).getImages()[0]);
     }
 
     public void addItems(ArrayList<ZhihuDailyItem> list) {
@@ -56,12 +56,15 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
 
     static class ZhihuViewHolder extends RecyclerView.ViewHolder {
 
+        //        @BindView(R.id.item_image_id)
+//        BadgedFourThreeImageView itemImageId;
         @BindView(R.id.item_image_id)
-        BadgedFourThreeImageView itemImageId;
+        SimpleDraweeView itemImageId;
         @BindView(R.id.item_text_id)
         TextView itemText;
         @BindView(R.id.zhihu_item_layout)
         LinearLayout zhihuItemLayout;
+
 
         ZhihuViewHolder(View itemView) {
             super(itemView);

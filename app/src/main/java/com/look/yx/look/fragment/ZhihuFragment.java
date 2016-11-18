@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.look.yx.look.bean.zhihu.ZhihuDaily;
 import com.look.yx.look.presenter.implPresenter.ZhihuPreseterImpl;
 import com.look.yx.look.presenter.implView.IZhihuFragment;
 import com.look.yx.look.util.NetWorkUtil;
+import com.look.yx.look.view.GridItemDividerDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -145,13 +147,16 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
                                 //让刷新飘一会，爽一爽
                                 mSwipeRefreshLayout.setRefreshing(false);
                             }
-                        },1000);
+                        },800);
 
                     }
                 }
         );
         recycle.setLayoutManager(mLinearLayoutManager);
         recycle.setHasFixedSize(true);
+        recycle.addItemDecoration(new GridItemDividerDecoration(getContext(), R.dimen.divider_height, R.color.divider));
+        // TODO: 16/8/13 add  animation
+        recycle.setItemAnimator(new DefaultItemAnimator());
         recycle.setAdapter(zhihuAdapter);
         recycle.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
