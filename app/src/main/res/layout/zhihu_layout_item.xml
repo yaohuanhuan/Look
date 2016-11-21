@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/zhihu_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,7 +21,9 @@
         android:elevation="@dimen/z_card"
         android:stateListAnimator="@animator/raise"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="@dimen/image_left_margin"/>
+        android:foreground="@drawable/mid_grey_ripple"
+        android:layout_marginLeft="@dimen/image_left_margin"
+        />
 
 
     <TextView

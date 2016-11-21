@@ -1,15 +1,19 @@
 package com.look.yx.look.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.look.yx.look.R;
+import com.look.yx.look.activity.ZhihuDescribeActivity;
 import com.look.yx.look.bean.zhihu.ZhihuDailyItem;
 
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHolder> {
 
-
+    private String mImageUrl;
     private Context mContext;
     private List<ZhihuDailyItem> zhihuDailyItemList = new ArrayList<>();
 
@@ -39,13 +43,36 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
     }
 
     @Override
-    public void onBindViewHolder(ZhihuViewHolder holder, int position) {
+    public void onBindViewHolder(final ZhihuViewHolder holder, final int position) {
         holder.itemText.setText(zhihuDailyItemList.get(position).getTitle());
         holder.itemImageId.setImageURI(zhihuDailyItemList.get(position).getImages()[0]);
+        holder.itemImageId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goDescribeActivity(holder,zhihuDailyItemList.get(position));
+            }
+        });
+        holder.zhihuItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goDescribeActivity(holder,zhihuDailyItemList.get(position));
+            }
+        });
+    }
+
+    private void goDescribeActivity(ZhihuViewHolder holder,ZhihuDailyItem zhihuDailyItem){
+
+        Intent intent = new Intent(mContext, ZhihuDescribeActivity.class);
+        intent.putExtra("id", zhihuDailyItem.getId());
+        intent.putExtra("title", zhihuDailyItem.getTitle());
+        intent.putExtra("image",mImageUrl);
+        mContext.startActivity(intent);
+
     }
 
     public void addItems(ArrayList<ZhihuDailyItem> list) {
         zhihuDailyItemList.addAll(list);
+        //TODO  效率不高
         notifyDataSetChanged();
     }
 
@@ -56,8 +83,6 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
 
     static class ZhihuViewHolder extends RecyclerView.ViewHolder {
 
-        //        @BindView(R.id.item_image_id)
-//        BadgedFourThreeImageView itemImageId;
         @BindView(R.id.item_image_id)
         SimpleDraweeView itemImageId;
         @BindView(R.id.item_text_id)

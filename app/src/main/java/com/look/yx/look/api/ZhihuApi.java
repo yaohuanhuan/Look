@@ -2,6 +2,7 @@ package com.look.yx.look.api;
 
 
 import com.look.yx.look.bean.zhihu.ZhihuDaily;
+import com.look.yx.look.bean.zhihu.ZhihuStory;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -19,5 +20,8 @@ public interface ZhihuApi {
 
     @GET("/api/4/news/before/{date}")
     Observable<ZhihuDaily> getTheDaily(@Path("date") String date);
+
+    @GET("/api/4/news/{id}")
+    Observable<ZhihuStory> getZhihuStory(@Path("id") String id);
 
 }

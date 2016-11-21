@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.look.yx.look.R;
 import com.look.yx.look.adapter.ZhihuAdapter;
 import com.look.yx.look.bean.zhihu.ZhihuDaily;
@@ -97,7 +98,6 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
 
     @Override
     public void showError(String error) {
-        Log.e("test","111111111111111111");
         if (recycle != null) {
             Snackbar.make(recycle, getString(R.string.snack_infor), Snackbar.LENGTH_LONG).setAction("重试", new View.OnClickListener() {
                 @Override
@@ -155,7 +155,6 @@ public class ZhihuFragment extends BaseFragment implements IZhihuFragment {
         recycle.setLayoutManager(mLinearLayoutManager);
         recycle.setHasFixedSize(true);
         recycle.addItemDecoration(new GridItemDividerDecoration(getContext(), R.dimen.divider_height, R.color.divider));
-        // TODO: 16/8/13 add  animation
         recycle.setItemAnimator(new DefaultItemAnimator());
         recycle.setAdapter(zhihuAdapter);
         recycle.addOnScrollListener(new RecyclerView.OnScrollListener() {
