@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Look</string>
     <string name="snack_infor">请检查网络</string>
+    <string name="transition_shot_background" translatable="false">shot_background</string>
+
+    <string name="zhihu" translatable="false">知乎日报</string>
+    <string name="topnews" translatable="false">网易头条</string>
+    <string name="meizi" translatable="false">每日看看</string>
+
+    <string name="transition_shot" translatable="false">shot</string>
 </resources>
