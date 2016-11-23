@@ -3,15 +3,22 @@ package com.look.yx.look.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.transition.ChangeBounds;
 import android.transition.Transition;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -24,12 +31,23 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.look.yx.look.R;
 import com.look.yx.look.bean.zhihu.ZhihuStory;
+import com.look.yx.look.config.Config;
 import com.look.yx.look.presenter.IZhihuStoryPresenter;
 import com.look.yx.look.presenter.implPresenter.ZhihuStoryPresenterImpl;
 import com.look.yx.look.presenter.implView.IZhihuStory;
 import com.look.yx.look.util.AnimUtils;
+import com.look.yx.look.util.ColorUtils;
+import com.look.yx.look.util.DensityUtil;
+import com.look.yx.look.util.GlideUtils;
+import com.look.yx.look.util.ViewUtils;
+import com.look.yx.look.util.WebUtil;
 import com.look.yx.look.widget.ElasticDragDismissFrameLayout;
 import com.look.yx.look.widget.ParallaxScrimageView;
 import com.look.yx.look.widget.TranslateYTextView;
@@ -45,6 +63,8 @@ import butterknife.OnClick;
  */
 
 public class ZhihuDescribeActivity extends AppCompatActivity implements IZhihuStory {
+
+    private static final float SCRIM_ADJUSTMENT = 0.075f;
 
     @BindView(R.id.shot)
     ParallaxScrimageView mShot;
@@ -84,6 +104,23 @@ public class ZhihuDescribeActivity extends AppCompatActivity implements IZhihuSt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihudescribe);
         ButterKnife.bind(this);
+        mDeviceInfo = DensityUtil.getDeviceInfo(this);
+        width = mDeviceInfo[0];
+        heigh = width * 3 / 4;
+        setSupportActionBar(mToolbar);
+        initlistenr();
+        initData();
+        initView();
+        getData();
+
+        chromeFader = new ElasticDragDismissFrameLayout.SystemChromeFader(this);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+
+            getWindow().getSharedElementReturnTransition().addListener(zhihuReturnHomeListener);
+            getWindow().setSharedElementEnterTransition(new ChangeBounds());
+        }
+
+        enterAnimation();
     }
 
     private void initlistenr() {
@@ -252,7 +289,21 @@ public class ZhihuDescribeActivity extends AppCompatActivity implements IZhihuSt
 
     @Override
     public void showZhihuStory(ZhihuStory zhihuStory) {
-
+        Glide.with(this)
+                .load(zhihuStory.getImage()).centerCrop()
+                .listener(loadListener).override(width,heigh)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(mShot);
+        url = zhihuStory.getShareUrl();
+        isEmpty= TextUtils.isEmpty(zhihuStory.getBody());
+        mBody=zhihuStory.getBody();
+        scc=zhihuStory.getCss();
+        if (isEmpty) {
+            wvZhihu.loadUrl(url);
+        } else {
+            String data = WebUtil.buildHtmlWithCss(mBody, scc, Config.isNight);
+            wvZhihu.loadDataWithBaseURL(WebUtil.BASE_URL, data, WebUtil.MIME_TYPE, WebUtil.ENCODING, WebUtil.FAIL_URL);
+        }
     }
 
     private void expandImageAndFinish() {
@@ -281,6 +332,101 @@ public class ZhihuDescribeActivity extends AppCompatActivity implements IZhihuSt
             }
         }
     }
+
+    private RequestListener loadListener = new RequestListener<String, GlideDrawable>() {
+        @Override
+        public boolean onResourceReady(GlideDrawable resource, String model,
+                                       Target<GlideDrawable> target, boolean isFromMemoryCache,
+                                       boolean isFirstResource) {
+            final Bitmap bitmap = GlideUtils.getBitmap(resource);
+            final int twentyFourDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    24, ZhihuDescribeActivity.this.getResources().getDisplayMetrics());
+            Palette.from(bitmap)
+                    .maximumColorCount(3)
+                    .clearFilters() /* by default palette ignore certain hues
+                        (e.g. pure black/white) but we don't want this. */
+                    .setRegion(0, 0, bitmap.getWidth() - 1, twentyFourDip) /* - 1 to work around
+                        https://code.google.com/p/android/issues/detail?id=191013 */
+                    .generate(new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(Palette palette) {
+                            boolean isDark;
+                            @ColorUtils.Lightness int lightness = ColorUtils.isDark(palette);
+                            if (lightness == ColorUtils.LIGHTNESS_UNKNOWN) {
+                                isDark = ColorUtils.isDark(bitmap, bitmap.getWidth() / 2, 0);
+                            } else {
+                                isDark = lightness == ColorUtils.IS_DARK;
+                            }
+
+                            // color the status bar. Set a complementary dark color on L,
+                            // light or dark color on M (with matching status bar icons)
+                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+
+
+                                int statusBarColor = getWindow().getStatusBarColor();
+                                final Palette.Swatch topColor =
+                                        ColorUtils.getMostPopulousSwatch(palette);
+                                if (topColor != null &&
+                                        (isDark || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
+                                    statusBarColor = ColorUtils.scrimify(topColor.getRgb(),
+                                            isDark, SCRIM_ADJUSTMENT);
+                                    // set a light status bar on M+
+                                    if (!isDark && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        ViewUtils.setLightStatusBar(mShot);
+                                    }
+                                }
+
+                                if (statusBarColor != getWindow().getStatusBarColor()) {
+                                    mShot.setScrimColor(statusBarColor);
+                                    ValueAnimator statusBarColorAnim = ValueAnimator.ofArgb(
+                                            getWindow().getStatusBarColor(), statusBarColor);
+                                    statusBarColorAnim.addUpdateListener(new ValueAnimator
+                                            .AnimatorUpdateListener() {
+                                        @Override
+                                        public void onAnimationUpdate(ValueAnimator animation) {
+                                            getWindow().setStatusBarColor(
+                                                    (int) animation.getAnimatedValue());
+                                        }
+                                    });
+                                    statusBarColorAnim.setDuration(1000L);
+                                    statusBarColorAnim.setInterpolator(
+                                            new AccelerateInterpolator());
+                                    statusBarColorAnim.start();
+                                }
+                            }
+
+                        }
+                    });
+
+
+            Palette.from(bitmap)
+                    .clearFilters()
+                    .generate(new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(Palette palette) {
+
+                            // slightly more opaque ripple on the pinned image to compensate
+                            // for the scrim
+                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+
+                                mShot.setForeground(ViewUtils.createRipple(palette, 0.3f, 0.6f,
+                                        ContextCompat.getColor(ZhihuDescribeActivity.this, R.color.mid_grey),
+                                        true));
+                            }
+                        }
+                    });
+
+            // TODO should keep the background if the image contains transparency?!
+            mShot.setBackground(null);
+            return false;
+        }
+
+        @Override
+        public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                                   boolean isFirstResource) {
+            return false;
+        }
+    };
 
     private void enterAnimation() {
         float offSet = mToolbar.getHeight();

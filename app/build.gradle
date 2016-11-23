@@ -43,4 +43,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     //图片加载相关
     compile 'com.facebook.fresco:fresco:0.14.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
