@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.ChangeBounds;
 import android.transition.Transition;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ import com.look.yx.look.widget.ParallaxScrimageView;
 import com.look.yx.look.widget.TranslateYTextView;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -298,6 +300,7 @@ public class ZhihuDescribeActivity extends AppCompatActivity implements IZhihuSt
         isEmpty= TextUtils.isEmpty(zhihuStory.getBody());
         mBody=zhihuStory.getBody();
         scc=zhihuStory.getCss();
+        Log.e("test", Arrays.toString(scc));
         if (isEmpty) {
             wvZhihu.loadUrl(url);
         } else {

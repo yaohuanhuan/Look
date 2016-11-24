@@ -1,5 +1,7 @@
 package com.look.yx.look.presenter.implPresenter;
 
+import android.util.Log;
+
 import com.look.yx.look.api.ApiManage;
 import com.look.yx.look.bean.zhihu.ZhihuStory;
 import com.look.yx.look.presenter.IZhihuStoryPresenter;
@@ -42,6 +44,7 @@ public class ZhihuStoryPresenterImpl extends BasePresenterImpl implements IZhihu
 
                     @Override
                     public void onNext(ZhihuStory zhihuStory) {
+                        Log.e("test",zhihuStory.toString());
                         mIZhihuStory.showZhihuStory(zhihuStory);
                     }
                 });

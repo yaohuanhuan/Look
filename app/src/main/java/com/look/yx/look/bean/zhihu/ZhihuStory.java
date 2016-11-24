@@ -2,6 +2,8 @@ package com.look.yx.look.bean.zhihu;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 /**
  * Created by yx on 2016/11/21
  */
@@ -55,5 +57,16 @@ public class ZhihuStory {
 
     public void setCss(String[] css) {
         this.css = css;
+    }
+
+    @Override
+    public String toString() {
+        return "ZhihuStory{" +
+                "body='" + body + '\'' +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", mShareUrl='" + mShareUrl + '\'' +
+                ", css=" + Arrays.toString(css) +
+                '}';
     }
 }
