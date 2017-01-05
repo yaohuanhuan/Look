@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <transition
-        class="com.looklook.xinghongfei.looklook.view.Pop"
+        class="com.look.yx.look.view.Pop"
         android:duration="@android:integer/config_shortAnimTime"
         android:startDelay="@android:integer/config_shortAnimTime"
         android:interpolator="@android:interpolator/fast_out_slow_in">
