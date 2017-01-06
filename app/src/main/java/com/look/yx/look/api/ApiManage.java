@@ -18,6 +18,7 @@ public class ApiManage {
     public static ApiManage apiManage;
     //ZhihuApi引用
     public ZhihuApi zhihuApi;
+    public TopNews topNews;
     //OkHttp打印日志类，可以打印http请求信息
     public static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     //OkHttpClient实例
@@ -61,4 +62,23 @@ public class ApiManage {
         }
         return zhihuApi;
     }
+
+    public TopNews getTopNewsService() {
+        if (topNews == null) {
+            synchronized (zhihuMonitor) {
+                if (topNews == null) {
+                    topNews = new Retrofit.Builder()
+                            .baseUrl("http://c.m.163.com")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(client)
+                            .build().create(TopNews.class);
+
+                }
+            }
+        }
+
+        return topNews;
+    }
+
 }

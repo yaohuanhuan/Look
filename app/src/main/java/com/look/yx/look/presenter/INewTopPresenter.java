@@ -5,4 +5,5 @@ package com.look.yx.look.presenter;
  */
 
 public interface INewTopPresenter extends BasePresenter {
+    void getNewsList(int t);
 }

@@ -106,4 +106,18 @@ public class NewsBean implements Serializable {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "NewsBean{" +
+                "docid='" + docid + '\'' +
+                ", title='" + title + '\'' +
+                ", digest='" + digest + '\'' +
+                ", imgsrc='" + imgsrc + '\'' +
+                ", source='" + source + '\'' +
+                ", ptime='" + ptime + '\'' +
+                ", tag='" + tag + '\'' +
+                ", hasFadedIn=" + hasFadedIn +
+                '}';
+    }
 }

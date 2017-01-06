@@ -19,7 +19,6 @@ import rx.schedulers.Schedulers;
 public class ZhihuStoryPresenterImpl extends BasePresenterImpl implements IZhihuStoryPresenter {
 
     private IZhihuStory mIZhihuStory;
-
     public ZhihuStoryPresenterImpl(IZhihuStory zhihuStory) {
         if (zhihuStory == null)
             throw new IllegalArgumentException("zhihuStory must not be null");
