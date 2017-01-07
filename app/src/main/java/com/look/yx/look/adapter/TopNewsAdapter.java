@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.look.yx.look.R;
 import com.look.yx.look.bean.news.NewsBean;
 import com.look.yx.look.bean.zhihu.ZhihuDailyItem;
+import com.look.yx.look.util.DensityUtil;
+import com.look.yx.look.util.DribbbleTarget;
 import com.look.yx.look.widget.BadgedFourThreeImageView;
 
 import java.util.ArrayList;
@@ -27,9 +31,14 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.TopNewsV
 
     private ArrayList<NewsBean> topNewitems = new ArrayList<>();
     private Context mContext;
-
+    float width;
+    int widthPx;
+    int heighPx;
     public TopNewsAdapter(Context mContext) {
         this.mContext = mContext;
+        width = mContext.getResources().getDimension(R.dimen.image_width);
+        widthPx = DensityUtil.dip2px(mContext, width);
+        heighPx = widthPx * 3 / 4;
     }
 
     @Override
@@ -40,7 +49,14 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.TopNewsV
 
     @Override
     public void onBindViewHolder(TopNewsViewHolder holder, int position) {
-        holder.textView.setText("测试");
+        final NewsBean newsBeanItem = topNewitems.get(holder.getAdapterPosition());
+        holder.textView.setText(newsBeanItem.getTitle());
+        holder.sourceTextview.setText(newsBeanItem.getSource());
+        Glide.with(mContext)
+                .load(newsBeanItem.getImgsrc())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .centerCrop().override(widthPx, heighPx)
+                .into(new DribbbleTarget(holder.imageView, false));
     }
 
     @Override

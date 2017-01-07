@@ -131,12 +131,16 @@ public class TopNewsFragment extends BaseFragment implements ITopNewsFragment {
 
     @Override
     public void showProgressDialog() {
-
+        if (prograss != null) {
+            prograss.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hidProgressDialog() {
-
+        if (prograss != null) {
+            prograss.setVisibility(View.GONE);
+        }
     }
 
     @Override

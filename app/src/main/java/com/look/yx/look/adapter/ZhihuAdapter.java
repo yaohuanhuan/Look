@@ -44,6 +44,7 @@ public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHol
 
     @Override
     public void onBindViewHolder(final ZhihuViewHolder holder, final int position) {
+
         holder.itemText.setText(zhihuDailyItemList.get(position).getTitle());
         holder.itemImageId.setImageURI(zhihuDailyItemList.get(position).getImages()[0]);
         holder.itemImageId.setOnClickListener(new View.OnClickListener() {

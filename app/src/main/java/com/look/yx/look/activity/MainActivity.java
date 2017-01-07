@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         fragmentManager = getSupportFragmentManager();
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "home")).setActiveColor(R.color.colorPrimary)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_book_white_24dp, "book"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_favorite_white_24dp, "favorite"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "zhihu")).setActiveColor(R.color.colorPrimary)
+                .addItem(new BottomNavigationItem(R.mipmap.ic_book_white_24dp, "news"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_favorite_white_24dp, "meizi"))
                 .setMode(BottomNavigationBar.MODE_FIXED)
                 .initialise();
 
