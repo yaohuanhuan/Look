@@ -126,4 +126,24 @@ public class Meizi {
     public Date publishedAt;
     public int imageWidth;
     public int imageHeight;
+
+    @Override
+    public String toString() {
+        return "Meizi{" +
+                "objectId='" + objectId + '\'' +
+                ", url='" + url + '\'' +
+                ", type='" + type + '\'' +
+                ", desc='" + desc + '\'' +
+                ", who='" + who + '\'' +
+                ", used=" + used +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", hasFadedIn=" + hasFadedIn +
+                ", publishedAt=" + publishedAt +
+                ", imageWidth=" + imageWidth +
+                ", imageHeight=" + imageHeight +
+                '}';
+    }
+
+
 }

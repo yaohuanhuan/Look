@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-    <TextView
-        android:layout_centerInParent="true"
-        android:id="@+id/test"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_meizi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:clipToPadding="false"
+        android:elevation="1dp" />
+
+    <ProgressBar
+        android:id="@+id/prograss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="妹子" />
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="?android:colorAccent"
+        android:indeterminateTintMode="src_in" />
 
-</RelativeLayout>
+
+
+
+    <ViewStub
+        android:id="@+id/stub_no_connection_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout="@layout/no_connection_text" />
+
+
+
+</FrameLayout>

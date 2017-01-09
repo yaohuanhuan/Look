@@ -5,4 +5,6 @@ package com.look.yx.look.presenter;
  */
 
 public interface IMeiziPresenter extends BasePresenter {
+    void getVedioData(int t);
+    void getMeiziData(int t);
 }

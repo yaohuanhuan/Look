@@ -114,4 +114,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public interface LoadingMore {
+
+        void loadingStart();
+
+        void loadingfinish();
+    }
+
 }

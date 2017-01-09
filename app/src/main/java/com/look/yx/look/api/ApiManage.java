@@ -19,6 +19,7 @@ public class ApiManage {
     //ZhihuApi引用
     public ZhihuApi zhihuApi;
     public TopNews topNews;
+    public GankApi ganK;
     //OkHttp打印日志类，可以打印http请求信息
     public static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     //OkHttpClient实例
@@ -79,6 +80,28 @@ public class ApiManage {
         }
 
         return topNews;
+    }
+
+    public GankApi getGankService(){
+        if (ganK==null){
+            synchronized (zhihuMonitor){
+                if (ganK==null){
+                    ganK=new Retrofit.Builder()
+                            .baseUrl("http://gank.io")
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .client(client)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build().create(GankApi.class);
+
+
+                }
+
+
+            }
+
+
+        }
+        return ganK;
     }
 
 }

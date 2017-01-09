@@ -63,6 +63,21 @@ public class Gank {
         return desc;
     }
 
+    @Override
+    public String toString() {
+        return "Gank{" +
+                "objectId='" + objectId + '\'' +
+                ", url='" + url + '\'' +
+                ", type='" + type + '\'' +
+                ", desc='" + desc + '\'' +
+                ", who='" + who + '\'' +
+                ", used=" + used +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", publishedAt=" + publishedAt +
+                '}';
+    }
+
     public void setDesc(String desc) {
         this.desc = desc;
     }

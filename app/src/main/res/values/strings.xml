@@ -7,5 +7,8 @@
     <string name="topnews" translatable="false">网易头条</string>
     <string name="meizi" translatable="false">每日看看</string>
 
+    <string name="meizitips" translatable="false">每日推送一个漂亮妹子和经典视频,看不看随小主!(长按保存图片)</string>
+    <string name="meiziaction" translatable="false">我懂</string>
+
     <string name="transition_shot" translatable="false">shot</string>
 </resources>
