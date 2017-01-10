@@ -33,6 +33,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'org.sufficientlysecure:html-textview:1.3'
     //rxJava与retrofit相关
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
