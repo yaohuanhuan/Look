@@ -24,10 +24,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.look.yx.look.R;
 import com.look.yx.look.activity.MainActivity;
+import com.look.yx.look.activity.MeiziPhotoDescribeActivity;
 import com.look.yx.look.bean.meizhi.Gank;
 import com.look.yx.look.bean.meizhi.Meizi;
 import com.look.yx.look.util.DensityUtil;
 import com.look.yx.look.util.DribbbleTarget;
+import com.look.yx.look.util.Help;
 import com.look.yx.look.util.ObservableColorMatrix;
 import com.look.yx.look.widget.BadgedFourThreeImageView;
 
@@ -84,6 +86,8 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     }
+
+
 
     private void bindLoadingViewHold(LoadingMoreHolder holder, int position) {
         holder.progressBar.setVisibility(showLoadingMore? View.VISIBLE : View.INVISIBLE);
@@ -153,17 +157,17 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void startDescribeActivity(Meizi meizi,RecyclerView.ViewHolder holder){
 
-//        Intent intent = new Intent(mContext, MeiziPhotoDescribeActivity.class);
-//        intent.putExtra("image",meizi.getUrl());
-//        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-//
-//            final android.support.v4.util.Pair<View, String>[] pairs = Help.createSafeTransitionParticipants
-//                    ((Activity) mContext, false,new android.support.v4.util.Pair<>(((MeiziViewHolder)holder).imageView, mContext.getString(R.string.meizi)));
-//            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, pairs);
-//            mContext.startActivity(intent, options.toBundle());
-//        }else {
-//            mContext.startActivity(intent);
-//        }
+        Intent intent = new Intent(mContext, MeiziPhotoDescribeActivity.class);
+        intent.putExtra("image",meizi.getUrl());
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+
+            final android.support.v4.util.Pair<View, String>[] pairs = Help.createSafeTransitionParticipants
+                    ((Activity) mContext, false,new android.support.v4.util.Pair<>(((MeiziViewHolder)holder).imageView, mContext.getString(R.string.meizi)));
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, pairs);
+            mContext.startActivity(intent, options.toBundle());
+        }else {
+            mContext.startActivity(intent);
+        }
 
     }
 

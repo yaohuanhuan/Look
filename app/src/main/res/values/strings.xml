@@ -13,5 +13,7 @@
     <string name="transition_topnew" translatable="false">topnewsimage</string>
     <string name="transition_topnew_linear" translatable="false">topnewlinear</string>
 
+    <string name="save_meizi" translatable="false">小主好眼力,快收了她</string>
+
     <string name="transition_shot" translatable="false">shot</string>
 </resources>

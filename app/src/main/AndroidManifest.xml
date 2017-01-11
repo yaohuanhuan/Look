@@ -46,6 +46,12 @@
                 android:value=".activity.MainActivity"/>
         </activity>
 
+        <activity
+            android:name=".activity.MeiziPhotoDescribeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Look.Home"/>
+
     </application>
 
 </manifest>
